@@ -1,0 +1,26 @@
+{
+  "framework": null,
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist/client",
+  "functions": {
+    "api/ssr.js": {
+      "maxDuration": 30,
+      "includeFiles": "dist/server/**"
+    },
+    "api/analyze.js": {
+      "maxDuration": 120
+    },
+    "api/search.js": {
+      "maxDuration": 120
+    },
+    "api/channel.js": {
+      "maxDuration": 120
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/api/ssr"
+    }
+  ]
+}

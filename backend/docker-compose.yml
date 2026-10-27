@@ -1,0 +1,30 @@
+services:
+  app:
+    build: .
+    container_name: tiktok-api
+    env_file:
+      - .env
+    environment:
+      - MAX_CONCURRENT_BROWSERS=3
+    volumes:
+      - ./cookies.json:/app/cookies.json:ro
+    ports:
+      - "8000:8000"
+    shm_size: "1gb"
+    mem_limit: "2g"
+    cpus: "2"
+    restart: unless-stopped
+
+  ngrok:
+    image: ngrok/ngrok:latest
+    container_name: tiktok-api-ngrok
+    depends_on:
+      - app
+    environment:
+      NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN}
+    command:
+      - "http"
+      - "app:8000"
+    ports:
+      - "4040:4040"
+    restart: unless-stopped
